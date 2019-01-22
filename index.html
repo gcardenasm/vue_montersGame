@@ -84,7 +84,10 @@
                 }else {
                     this.playerHealth = 100;
                 }
-                
+                this.turns.unshift({
+                    isplayer: true,
+                    text:  'Player heals for 10'
+                });
                 this.monsterAttack();
             },
             giveUp: function () {
