@@ -45,11 +45,11 @@
             <button id="give-up"  @click="giveUp">GIVE UP</button>
         </div>
     </section>
-    <section class="row log">
+    <section class="row log" v-if="turns.length > 0">
         <div class="small-12 columns">
             <ul>
-                <li>
-
+                <li v-for="turn in turns">
+                    {{ turn.text }}
                 </li>
             </ul>
         </div>
@@ -61,7 +61,8 @@
         data: {
             playerHealth: 100,
             monsterHealth: 100,
-            gameIsRunning: false
+            gameIsRunning: false,
+            turns: []
         },
         methods: {
             startGame: function() {
@@ -70,11 +71,11 @@
                 this.monsterHealth = 100;
             },
             attack: function() {
-                this.userAttack(3,10);
+                this.PlayerAttack(3,10, 'Player hits Monster for ');
                 this.monsterAttack();
             },
             especialAttack: function () {
-                this.userAttack(10,20);
+                this.PlayerAttack(10,20, 'Player hits Monster hard for ');
                 this.monsterAttack();
             },
             heal: function() {
@@ -89,15 +90,27 @@
             giveUp: function () {
                 this.gameIsRunning = false;
             },
-            userAttack: function (min, max){
-                this.monsterHealth -= this.calculateDamage(min, max);
+            PlayerAttack: function (min, max, txt){
+                var damage = this.calculateDamage(min, max);
+                this.monsterHealth -= damage;
                 if(this.checkWin()){
                     return;
                 }
+                console.log(txt);
+                this.turns.unshift({
+                    isplayer: true,
+                    text:  txt + ' ' + damage
+                });
+                console.log(this.turns);
             },
             monsterAttack: function() {
-                this.playerHealth -= this.calculateDamage(5, 12);
+                var damage = this.calculateDamage(5, 12);
+                this.playerHealth -= damage;
                 this.checkWin();
+                this.turns.unshift({
+                    isplayer: false,
+                    text: 'Monster hits Player for ' + damage
+                });
             },
             calculateDamage: function (min, max) {
                 return Math.max(Math.floor(Math.random() * max + 1), min)
