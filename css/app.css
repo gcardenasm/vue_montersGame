@@ -52,6 +52,15 @@ button {
     box-shadow: 0 1px 1px black;
     margin: 10px;
 }
+.player-img{
+    max-width: 470px;
+    margin-bottom: 15px;
+    text-align: center;
+}
+.monster-img{
+    max-width: 470px;
+    margin-bottom: 15px;
+}
 
 #start-game {
     background-color: #aaffb0;

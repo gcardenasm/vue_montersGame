@@ -11,6 +11,9 @@
     <section class="row">
         <div class="small-6 columns">
             <h1 class="text-center">YOU</h1>
+            <div class="player-img">
+                <img v-bind:src="imgPlayer">
+            </div>
             <div class="healthbar">
                 <div 
                     class="healthbar text-center" 
@@ -22,6 +25,9 @@
         </div>
         <div class="small-6 columns">
             <h1 class="text-center">MONSTER</h1>
+            <div class="monster-img">
+                <img v-bind:src="imgMonster">
+            </div>
             <div class="healthbar">
                 <div 
                     class="healthbar text-center" 
@@ -64,21 +70,27 @@
             playerHealth: 100,
             monsterHealth: 100,
             gameIsRunning: false,
-            turns: []
+            turns: [],
+            imgPlayer: 'https://www.cinemascomics.com/wp-content/uploads/2017/12/goku-dragon-ball-super-fan-art.jpg',
+            imgMonster: 'https://i.ytimg.com/vi/GFbX2c6HfxA/maxresdefault.jpg'
         },
         methods: {
             startGame: function() {
                 this.gameIsRunning = true;
                 this.playerHealth = 100;
                 this.monsterHealth = 100;
+                this.imgPlayer = 'https://www.cinemascomics.com/wp-content/uploads/2017/12/goku-dragon-ball-super-fan-art.jpg';
+                this.imgMonster = 'https://i.ytimg.com/vi/GFbX2c6HfxA/maxresdefault.jpg';
             },
             attack: function() {
                 this.PlayerAttack(3,10, 'Player hits Monster for ');
                 this.monsterAttack();
+                this.imgPlayer = 'assets/attack.gif';
             },
             especialAttack: function () {
                 this.PlayerAttack(10,20, 'Player hits Monster hard for ');
                 this.monsterAttack();
+                this.imgPlayer = 'assets/especial.gif';
             },
             heal: function() {
                 if(this.playerHealth <= 90) {
@@ -90,6 +102,7 @@
                     isplayer: true,
                     text:  'Player heals for 10'
                 });
+                this.imgPlayer = 'assets/heal.gif';
                 this.monsterAttack();
             },
             giveUp: function () {
